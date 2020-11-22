@@ -28,7 +28,7 @@ namespace ServerApplication.ChatServer
             return new List<UserModel>(_users);
         }
 
-        // Получаем ник подлючившегося клиента
+        // Получаем ник подключившегося клиента
         public static string GetUsernameFromTcpClient(TcpClient tcpClient)
         {
             var reg = new Regex("^[а-яА-Яa-zA-Z0-9]*$");
@@ -137,7 +137,7 @@ namespace ServerApplication.ChatServer
             return string.Compare(data, ok, true) == 0;
         }
 
-        // Сравнение сообщения от пользователя с командами и чата и ответ на них
+        // Сравнение сообщения от пользователя с командами чата и ответ на них
         private static bool AnswerToChatCommand(UserModel user, string data)
         {
             foreach (ChatCommands command in Enum.GetValues(typeof(ChatCommands)))

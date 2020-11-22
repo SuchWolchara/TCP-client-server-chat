@@ -32,7 +32,7 @@ namespace ClientApplication.ChatClient
         {
             try
             {
-                Connect();
+                ConnectTcpClient();
                 ConnectionServiceAsync();
             }
             catch (Exception e)
@@ -44,7 +44,7 @@ namespace ClientApplication.ChatClient
         public void Dispose()
         {
             UnsignEvents();
-            Disconnect(true);
+            DisconnectTcpClient(true);
         }
 
         // Асинхронное обслуживание подключения
@@ -64,7 +64,7 @@ namespace ClientApplication.ChatClient
                     SetChatCommands(data);
 
                 ChatLogic.ReceiveMessages();
-                Disconnect();
+                DisconnectTcpClient();
             });
         }
 
@@ -106,7 +106,7 @@ namespace ClientApplication.ChatClient
         private void ClientForm_ButtonConnectClicked()
         {
             if (_isConnected)
-                Disconnect();
+                DisconnectTcpClient();
             else
                 TryDoRun();
         }
@@ -128,7 +128,7 @@ namespace ClientApplication.ChatClient
 
         private void ChatLogic_Disconnect()
         {
-            Disconnect();
+            DisconnectTcpClient();
         }
 
         private void Application_ApplicationExit(object sender, EventArgs e)
@@ -169,7 +169,7 @@ namespace ClientApplication.ChatClient
         }
 
         // Установка соединения
-        private void Connect()
+        private void ConnectTcpClient()
         {
             if (_isConnected == false)
             {
@@ -183,7 +183,7 @@ namespace ClientApplication.ChatClient
         }
 
         // Разрыв соединения
-        private void Disconnect(bool disposed = false)
+        private void DisconnectTcpClient(bool disposed = false)
         {
             if (_isConnected)
             {
