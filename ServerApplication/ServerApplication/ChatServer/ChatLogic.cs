@@ -109,8 +109,10 @@ namespace ServerApplication.ChatServer
             var now = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
             var fullMessage = string.Concat(now, ChatConstants.Separator, username, ChatConstants.Separator, message);
             var msg = Encoding.Unicode.GetBytes(fullMessage);
+            var tasks = new List<Task>();
             foreach (var user in _users)
-                SendMessageToTcpClient(user.TcpClient, msg);
+                tasks.Add(Task.Run(() => SendMessageToTcpClient(user.TcpClient, msg)));
+            Task.WaitAll(tasks.ToArray());
         }
 
         // Отправка сообщения клиенту

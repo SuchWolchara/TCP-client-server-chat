@@ -173,26 +173,24 @@ namespace ClientApplication.ChatClient
         {
             if (_isConnected == false)
             {
-                _isConnected = true;
-
                 _tcpClient = new TcpClient();
                 _tcpClient.Connect(_ip, _port);
                 ChatLogic.SetTcpClient(_tcpClient);
+                _isConnected = true;
                 _clientForm.SetIsConnected(_isConnected);
             }
         }
 
         // Разрыв соединения
-        private void DisconnectTcpClient(bool disposed = false)
+        private void DisconnectTcpClient(bool disposing = false)
         {
             if (_isConnected)
             {
-                _isConnected = false;
-
                 _tcpClient.GetStream().Close();
                 _tcpClient.Close();
                 ChatLogic.SetTcpClient(null);
-                if (disposed == false)
+                _isConnected = false;
+                if (disposing == false)
                     _clientForm.SetIsConnected(_isConnected);
             }
         }
